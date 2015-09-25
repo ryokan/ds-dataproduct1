@@ -55,7 +55,7 @@ The model adopted here "fit2" adds am (automatic / manual transmission) to show 
 
 --- .class #id 
 
-## Wiget used for input
+## Widget used for input
 
 Here the following four input mehods are used.
 
