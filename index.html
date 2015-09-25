@@ -74,13 +74,19 @@ The prediction is shown in a text form and by a graphical form. </p>
   </hgroup>
   <article data-timings="">
     <p>First model to predict MPG uses the most parameter other than MPG and qsec (1/4 mile time), 
-which is also a result paramter.  The best fit model can be derived using step.</p>
+which is also a result paramter.  The best fit model can be derived using step  (results are suppressed).</p>
 
 <pre><code class="r">fit1 &lt;- lm(mpg ~ .-qsec , data=mtcars)
 best.fit &lt;- step(fit1)
 </code></pre>
 
-<p>The best fit model uses the following three paaramters</p>
+<p>The best fit model uses the following three paramters</p>
+
+<pre><code class="r">best.fit$call
+</code></pre>
+
+<pre><code>## lm(formula = mpg ~ cyl + hp + wt, data = mtcars)
+</code></pre>
 
 <ul>
 <li>wt (Weight)</li>
@@ -89,10 +95,7 @@ best.fit &lt;- step(fit1)
 </ul>
 
 <p>The model adopted here adds am (automatic transmission or manual transmission) 
-to show a radio button wiget.</p>
-
-<pre><code class="r">fit2 &lt;- lm(mpg ~ wt + cyl + hp + am, data=mtcars)
-</code></pre>
+to show a radio button widget.</p>
 
   </article>
   <!-- Presenter Notes -->
