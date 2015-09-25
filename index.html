@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Creating Data Product Sample</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Creating Data Product Sample">
+  <meta name="author" content="Yoshihiro Ueda">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Creating Data Product Sample</h1>
+    <h2>predicting MPG for a given automobile model</h2>
+    <p>Yoshihiro Ueda<br/>student</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Overview</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Given Task</h3>
+
+<p>Create a Shiny application, such that</p>
+
+<ul>
+<li>has some form of input (widget: textbox, radio button, checkbox, …) </li>
+<li>has ome operation on the ui input in sever.R </li>
+<li>has some reactive output displayed as a result of server calculations</li>
+<li>includes enough documentation so that a novice user could use the application</li>
+</ul>
+
+<h3>The Answer</h3>
+
+<p>Deleveloped an application which predict MPG (miles / gallon) from the given parameters. 
+Parameter input uses several kinds of widget and the parameters are given to the model 
+created by a machine learning algorithm. 
+The prediction is shown in a text form and by a graphical form. </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Method used: Linear Regression Model</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>First model to predict MPG uses the most parameter other than MPG and qsec (1/4 mile time), 
+which is also a result paramter.  The best fit model can be derived using step.</p>
+
+<pre><code class="r">fit1 &lt;- lm(mpg ~ .-qsec , data=mtcars)
+best.fit &lt;- step(fit1)
+</code></pre>
+
+<p>The best fit model uses the following three paaramters</p>
+
+<ul>
+<li>wt (Weight)</li>
+<li>cyl (number of cylinders)</li>
+<li>hp (Horsepower)</li>
+</ul>
+
+<p>The model adopted here adds am (automatic transmission or manual transmission) 
+to show a radio button wiget.</p>
+
+<pre><code class="r">fit2 &lt;- lm(mpg ~ wt + cyl + hp + am, data=mtcars)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Wiget used for input</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Here the following four input mehods are used.</p>
+
+<ul>
+<li>Silder for wt (weight)</li>
+<li>Numeirc for cyl (numer of cylinders): 4 to 8 by step 2 resulting 4, 6 and 8.</li>
+<li>Radio Button for am (automatic/manual transmission)</li>
+<li>Text for hp (horsepower)</li>
+</ul>
+
+<pre><code class="r">    sliderInput(&#39;wt&#39;, &#39;Weight (ib/1000)&#39;, value = 3, min = 1, max = 5, step = 0.005)
+    numericInput(&#39;cyl&#39;, &quot;Number of cylinders&quot;, 4,  min = 4, max = 8, step = 2)
+    radioButtons(&#39;am&#39;, &quot;Transmission&quot;, choices = c(&quot;Automatic&quot; = 0, &quot;Manual&quot; = 1))
+    textInput(&#39;hp&#39;, &quot;HousePower (60 ~ 330)&quot;, value = &quot;200&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Processing and output</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The model fit2 is used for prediction (mpg) by a new set of parameters gathered from input.</p>
+
+<pre><code class="r">       newmpg &lt;- predict(fit2, newdata=new)
+</code></pre>
+
+<p>Also the result is shown on the graph. The blue spot is the predicted one.</p>
+
+<p><img src="https://raw.githubusercontent.com/ryokan/ds-dataproduct1/master/screenshot.png" alt="screenshot" width = "400px"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Overview'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Method used: Linear Regression Model'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Wiget used for input'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Processing and output'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
