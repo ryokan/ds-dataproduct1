@@ -1,4 +1,5 @@
 ## data product 1 
+require(rmarkdown)
 
 shinyUI(pageWithSidebar(
   headerPanel("Predicting MPG for an automobile model"),

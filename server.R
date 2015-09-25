@@ -1,6 +1,7 @@
 ## Data Product 1
 library(shinyapps)
 require(shiny)
+# require(rmarkdown)
 
 library(datasets)
 data(mtcars)
@@ -21,12 +22,11 @@ shinyServer(
      output$am <- renderPrint({ifelse ((input$am == 1), "Manual", "Automatic")})
      
      output$mpg <- renderText({
-       new[c("wt", "cyl", "hp", "am")] <- c(as.numeric({input$wt}),
-                                            as.numeric({input$cyl}),
-                                            as.numeric({input$hp}),
-                                            as.numeric({input$am}))
-       newmpg <- predict(fit2, newdata=new)
-       newmpg})
+       mtcars2[datanum+1, c("wt", "cyl", "hp", "am")] <- c(as.numeric({input$wt}),
+                                                           as.numeric({input$cyl}),
+                                                           as.numeric({input$hp}),
+                                                           as.numeric({input$am}))
+       predict(fit2, newdata=mtcars2[datanum+1,])})
      
     output$graph1 <- renderPlot({
       mtcars2[datanum+1, c("wt", "cyl", "hp", "am")] <- c(as.numeric({input$wt}),
