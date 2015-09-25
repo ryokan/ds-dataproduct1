@@ -33,8 +33,7 @@ The prediction is shown in a text form and by a graphical form.
 
 ## Method used: Linear Regression Model
 
-First model to predict MPG uses the most parameter other than MPG and qsec (1/4 mile time), 
-which is also a result paramter.  The best fit model can be derived using step  (results are suppressed).
+First model to predict MPG uses the most parameters other than MPG and qsec (1/4 mile time).  The best fit model can be derived using step(). (results are suppressed).
 
 
 ```r
@@ -42,7 +41,7 @@ fit1 <- lm(mpg ~ .-qsec , data=mtcars)
 best.fit <- step(fit1)
 ```
 
-The best fit model uses the following three paramters
+The best fit model uses the following three paramters: wt (Weight), cyl (number of cylinders) and hp (Horsepower)
 
 ```r
 best.fit$call
@@ -51,12 +50,8 @@ best.fit$call
 ```
 ## lm(formula = mpg ~ cyl + hp + wt, data = mtcars)
 ```
-* wt (Weight)
-* cyl (number of cylinders)
-* hp (Horsepower)
 
-The model adopted here adds am (automatic transmission or manual transmission) 
-to show a radio button widget.
+The model adopted here "fit2" adds am (automatic / manual transmission) to show a radio button widget.
 
 --- .class #id 
 
